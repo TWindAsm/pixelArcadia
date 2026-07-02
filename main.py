@@ -344,6 +344,8 @@ class Game:
             self.normal_button.draw(self.screen)
             self.hard_button.draw(self.screen)
             self.start_button.draw(self.screen)
+            
+            
  
         elif self.state == GameState.GAME_OVER:
             self.retry_button.draw(self.screen)

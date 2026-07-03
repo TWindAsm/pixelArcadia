@@ -172,11 +172,29 @@ class Snake:
         Args:
             screen (pygame.Surface): The game screen surface to draw the snake on.
         """
+        BORDER_COL = (0, 100, 0)
+
         for x, y in self.body:
+
+            rect = pygame.Rect(
+                x * CELL_SIZE,
+                y * CELL_SIZE,
+                CELL_SIZE,
+                CELL_SIZE
+            )
+
+            pygame.draw.rect(
+                screen,
+                BORDER_COL,
+                rect,
+                border_radius=2
+            )
+
             pygame.draw.rect(
                 screen,
                 SNAKE_COL,
-                (x * CELL_SIZE, y * CELL_SIZE, CELL_SIZE, CELL_SIZE)
+                rect.inflate(-2, -2),
+                border_radius=2
             )
 
 class Fruit:
@@ -323,12 +341,14 @@ class Game:
         self.last_move_time = current_time
 
         new_head = self.snake.check_next_move()
+        grow = (new_head == self.fruit.pos)
 
+        collision_body = self.snake.body if grow else self.snake.body[:-1]
         # check walls
-        if (self.snake.check_wall(new_head)):
+        if (self.snake.check_wall(new_head)) or new_head in collision_body:
             self.end_game()
+            return
         else:
-            grow = (new_head == self.fruit.pos)
             self.snake.move(new_head, grow)
             if grow:
                 self.score += 1

@@ -1,1 +1,1 @@
-Fun little game I am trying to make as a hobby. So far I have implemented the snake game although collision is not fully working.
+Fun little game I am trying to make as a hobby.
